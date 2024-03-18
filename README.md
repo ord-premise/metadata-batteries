@@ -1,5 +1,5 @@
-# D#.# - Title
-Short description of deliverable
+# Digital twins for coin cell battery
+This repository will serve as a deliverable 3.1 (Data schema for a digital twin applicable in battery research) for PREMISE project. 
 
 ## Authors
 __Nukorn Plainpan__  
