@@ -2,7 +2,15 @@
 Short description of deliverable
 
 ## Authors
-List of authors/contributors
+__Nukorn Plainpan__  
+Postdoctoral researcher 
+
+__Corsin Battaglia__  
+Principal investigator  
+
+Materials for Energy Conversion  
+Swiss Federal Laboratories for Materials Science and Technology (Empa)  
+
 
 ## Goals
 Longer description of what this repository delivers w.r.t PREMISE.
