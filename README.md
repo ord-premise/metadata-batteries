@@ -13,7 +13,8 @@ Swiss Federal Laboratories for Materials Science and Technology (Empa)
 
 
 ## Goals
-Longer description of what this repository delivers w.r.t PREMISE.
+This repository will illustrate how one can digitally represent a coin cell battery by creating a digital twin. We have developed a pipeline to represent a coin cell battery as a digital twin in a digital notebook [OpenBis](https://openbis.ch/).
+
 
 ## Achievements
 Describe here how this repository achieves the above goal.
