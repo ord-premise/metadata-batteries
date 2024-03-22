@@ -23,3 +23,8 @@ The [PREMISE](https://ord-premise.github.io/) project is supported by the [Open 
 ![image](https://github.com/ord-premise/metadata-batteries/assets/45081142/74640b5c-ee94-41e1-9acd-fa47da866fe8)
 
 ![image](https://github.com/ord-premise/metadata-batteries/assets/45081142/d282c4d9-feb3-47dc-b5d4-c616151518be)
+
+The[BattINFO](https://big-map.github.io/BattINFO/index.html) is developed under [Battery2030+](https://battery2030.eu/) project. 
+
+![image](https://battery2030.eu/wp-content/uploads/2021/08/battery2030-logo-white-text-B.png)
+
