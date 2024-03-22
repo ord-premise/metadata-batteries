@@ -1,5 +1,5 @@
 # D3.1 - Data schema for a digital twin applicable in battery research
-Metadata schemas to store coin cell battery. 
+Metadata schemas to digitally represent coin cell battery 
 
 ## Authors
  [Nukorn Plainpan](https://github.com/NukP)  
@@ -11,7 +11,7 @@ Corsin Battaglia
 
 
 ## Achievements
-This repository contains all the files needed for creating provenance of a coin cell battery.
+This repository contains all the files needed for creating a digital twin of a coin cell battery in JSON-LD format. 
 
 ## External links
 [JSONcrack](https://jsoncrack.com/): Great visualization tool for visualizing JSON-LD.
