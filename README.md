@@ -1,26 +1,20 @@
-# Digital twins for coin cell battery
-This repository will serve as a deliverable 3.1 (Data schema for a digital twin applicable in battery research) for PREMISE project. 
+# D3.1 - Data schema for a digital twin applicable in battery research
+Metadata schemas to store coin cell battery. 
 
 ## Authors
-__Nukorn Plainpan__  
-Postdoctoral researcher 
-
-__Corsin Battaglia__  
-Principal investigator  
-
-Materials for Energy Conversion  
-Swiss Federal Laboratories for Materials Science and Technology (Empa)  
+ [Nukorn Plainpan](https://github.com/NukP)  
+Corsin Battaglia 
 
 
 ## Goals
-This repository will illustrate how one can digitally represent a coin cell battery by creating a digital twin. We have developed a pipeline to represent a coin cell battery as a digital twin in a digital notebook [OpenBis](https://openbis.ch/).
+
 
 
 ## Achievements
-Describe here how this repository achieves the above goal.
+This repository contains all the files needed for creating provenance of a coin cell battery.
 
 ## External links
-List here any relevant tools used in preparing this deliverable that are not maintained by PREMISE.
+[JSONcrack](https://jsoncrack.com/): Great visualization tool for visualizing JSON-LD.
 
 ## Acknowledgements
 The [PREMISE](https://ord-premise.github.io/) project is supported by the [Open Research Data Program](https://ethrat.ch/en/eth-domain/open-research-data/) of the ETH Board.
