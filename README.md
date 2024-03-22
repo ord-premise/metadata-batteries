@@ -7,14 +7,15 @@ Corsin Battaglia
 
 
 ## Goals
-
+This repository introduces a set of metadata schemas designed for documenting the provenance of coin cell batteries. The schemas are provided in Excel format, facilitating ease of use without requiring specialized technical knowledge, thereby accommodating the general battery research community accustomed to Excel. The Excel schema, available as coin_cell_battery_schemas.xlsx, allows users to input metadata in a straightforward manner. Following data entry, the included Python script, excel_to_json-ld_converter.py, can be used to convert the Excel-based metadata into JSON-LD files. The conversion process integrates semantic annotations using concepts from [BattINFO](https://big-map.github.io/BattINFO/index.html), enabling the creation of semantically annotated digital twins in JSON-LD format.
 
 
 ## Achievements
 This repository contains all the files needed for creating a digital twin of a coin cell battery in JSON-LD format. 
 
 ## External links
-[JSONcrack](https://jsoncrack.com/): Great visualization tool for visualizing JSON-LD.
+[JSONcrack](https://jsoncrack.com/): Great visualization tool for visualizing JSON-LD.  
+[BattINFO](https://big-map.github.io/BattINFO/index.html): Battery ontoogy concept used in this repository. 
 
 ## Acknowledgements
 The [PREMISE](https://ord-premise.github.io/) project is supported by the [Open Research Data Program](https://ethrat.ch/en/eth-domain/open-research-data/) of the ETH Board.
