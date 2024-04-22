@@ -1,5 +1,5 @@
 # D3.1 - Data schema for a digital twin applicable in battery research
-Metadata schemas to digitally represent coin cell battery 
+Metadata schemas to digitally represent coin cell batteries 
 
 ## Authors
  [Nukorn Plainpan](https://github.com/NukP)  
@@ -7,7 +7,10 @@ Corsin Battaglia
 
 
 ## Goals
-This repository introduces a set of metadata schemas designed for documenting the provenance of coin cell batteries. The schemas are provided in Excel format, facilitating ease of use without requiring specialized technical knowledge, thereby accommodating the general battery research community accustomed to Excel. The Excel schema, available as coin_cell_battery_schemas.xlsx, allows users to input metadata in a straightforward manner. Following data entry, the included Python script, excel_to_json-ld_converter.py, can be used to convert the Excel-based metadata into JSON-LD files. The conversion process integrates semantic annotations using concepts from [BattINFO](https://big-map.github.io/BattINFO/index.html), enabling the creation of semantically annotated digital twins in JSON-LD format.
+This repository introduces a set of metadata schemas designed for documenting the provenance of coin cell batteries. The schemas are provided in Excel format, facilitating ease of use without requiring specialized technical knowledge, thereby accommodating the general battery research community accustomed to Excel. 
+The Excel schema, available as `coin_cell_battery_schemas.xlsx`, allows users to input metadata in a straightforward manner. 
+
+Moreover, we include a Python script, `excel_to_json-ld_converter.py`, that can be used to convert the Excel-based metadata into JSON-LD files. The conversion process integrates semantic annotations using concepts from [BattINFO](https://big-map.github.io/BattINFO/index.html), enabling the creation of semantically annotated digital twins in JSON-LD format.
 
 
 ## Achievements
