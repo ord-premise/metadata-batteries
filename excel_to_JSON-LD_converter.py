@@ -1,74 +1,105 @@
+import argparse
 import pandas as pd
 import json
 
-file_path = # Give the path to the input Excel metadata file.
-jsonld_file_path = # Give the path to the output jsonLD file. 
-
-def create_jsonld_with_conditions(schemas, item_id_map, connector_id_map):
+def create_jsonld_with_conditions(schemas, item_map, unit_map, context_toplevel, context_connector):
     jsonld = {
-        "@context": {
-            "@vocab": "http://emmo.info/electrochemistry#",
-            "xsd": "http://www.w3.org/2001/XMLSchema#"
-        },
-        "@graph": []
+        "@context": {},
+        "Battery": {
+            "@type": "battery:Battery"
+        }
     }
 
-    top_level_items = {}
+    # Build the @context part
+    for _, row in context_toplevel.iterrows():
+        jsonld["@context"][row['Item']] = row['Key']
 
+    connectors = set()
+    for _, row in context_connector.iterrows():
+        jsonld["@context"][row['Item']] = row['Key']
+        connectors.add(row['Item'])  # Track connectors to avoid redefining types
+
+    # Helper function to add nested structures with type annotations
+    def add_to_structure(path, value, unit):
+        current_level = jsonld["Battery"]
+        # Iterate through the path to create or navigate the structure
+        for idx, part in enumerate(path[1:]):
+            is_last = idx == len(path) - 2  # Check if current part is the last in the path
+
+            if part not in current_level:
+                if part in connectors:
+                    current_level[part] = {}
+                else:
+                    if part in item_map:
+                        current_level[part] = {"@type": item_map[part]['Key']}
+                    else:
+                        raise ValueError(f"Connector or item '{part}' is not defined in any relevant sheet.")
+
+            if not is_last:
+                current_level = current_level[part]
+            else:
+                # Handle the unit and value structure for the last item
+                final_type = item_map.get(part, {}).get('Key', '')
+                if unit != 'No Unit':
+                    if pd.isna(unit):
+                        raise ValueError(f"The value '{value}' is filled in the wrong row, please check the schemas")
+                    unit_info = unit_map[unit]
+                    current_level[part] = {
+                        "@type": final_type,
+                        "hasNumberValue": {
+                            "@type": "emmo:hasNumberValue",
+                            "value": value,
+                            "unit": {
+                                "label": unit_info['Label'],
+                                "symbol": unit_info['Symbol'],
+                                "@type": unit_info['Key']
+                            }
+                        }
+                    }
+                else:
+                    current_level[part] = {
+                        "@type": final_type,
+                        "value": value
+                    }
+
+    # Process each schema entry to construct the JSON-LD output
     for _, row in schemas.iterrows():
         if pd.isna(row['Value']) or row['Ontology link'] == 'NotOntologize':
-            continue  # Skip rows with empty value or 'NotOntologize' in Ontology link
+            continue
+        if pd.isna(row['Unit']):
+            raise ValueError(f"The value '{row['Value']}' is filled in the wrong row, please check the schemas")
 
-        ontology_links = row['Ontology link'].split('-')
-        if len(ontology_links) < 5:
-            continue  # Skip rows with insufficient parts in Ontology link
-
-        value = row['Value']
-        unit = row['Unit']
-
-        main_item = ontology_links[0]
-        relation = ontology_links[1]
-        sub_item = ontology_links[2]
-        property_relation = ontology_links[3]
-        property_item = ontology_links[4]
-
-        if main_item not in top_level_items:
-            top_level_items[main_item] = {
-                "@type": main_item,
-                relation: []
-            }
-            jsonld["@graph"].append(top_level_items[main_item])
-
-        sub_item_structure = {
-            "@type": sub_item,
-            property_relation: [{
-                "@type": property_item,
-                "hasValue": value,
-                "hasUnits": unit
-            }]
-        }
-
-        jsonld["@context"].update({
-            main_item: {"@id": item_id_map.get(main_item, ""), "@type": "@id"},
-            sub_item: {"@id": item_id_map.get(sub_item, ""), "@type": "@id"},
-            property_item: {"@id": item_id_map.get(property_item, ""), "@type": "@id"}
-        })
-
-        top_level_items[main_item][relation].append(sub_item_structure)
+        ontology_path = row['Ontology link'].split('-')
+        add_to_structure(ontology_path, row['Value'], row['Unit'])
 
     return jsonld
 
-# Load the provided Excel file
-excel_data = pd.ExcelFile(file_path)
+def convert_excel_to_jsonld(excel_file):
+    excel_data = pd.ExcelFile(excel_file)
+    
+    schemas = pd.read_excel(excel_data, 'Schemas')
+    item_map = pd.read_excel(excel_data, 'Ontology - Item').set_index('Item').to_dict(orient='index')
+    unit_map = pd.read_excel(excel_data, 'Ontology - Unit').set_index('Item').to_dict(orient='index')
+    context_toplevel = pd.read_excel(excel_data, '@context-TopLevel')
+    context_connector = pd.read_excel(excel_data, '@context-Connector')
 
-# Read the necessary sheets
-schemas = pd.read_excel(excel_data, sheet_name='Schemas')
-item_id_map = pd.read_excel(excel_data, sheet_name='Ontology - item').set_index('Item')['ID'].to_dict()
-connector_id_map = pd.read_excel(excel_data, sheet_name='Ontology - Connector').set_index('Item')['ID'].to_dict()
+    jsonld_output = create_jsonld_with_conditions(schemas, item_map, unit_map, context_toplevel, context_connector)
+    
+    return jsonld_output
 
-# Create the updated JSON-LD structure
-jsonld_output_updated = create_jsonld_with_conditions(schemas, item_id_map, connector_id_map)
+def main():
+    parser = argparse.ArgumentParser(description='Convert an Excel file to JSON-LD format.')
+    parser.add_argument('--path_to_excel_file', required=True, help='Path to the Excel file to convert.')
 
-# Save the updated JSON-LD output to a file
-with open(jsonld_file_path, 'w') as file:
-    json.dump(jsonld_output_updated, file, indent=4)
+    args = parser.parse_args()
+
+    jsonld = convert_excel_to_jsonld(args.path_to_excel_file)
+    jsonld_file_path = args.path_to_excel_file.replace('.xlsx', '.json')
+
+    with open(jsonld_file_path, 'w') as f:
+        json.dump(jsonld, f, indent=4)
+    
+    print(f"JSON-LD file has been saved to {jsonld_file_path}")
+
+if __name__ == "__main__":
+    main()
