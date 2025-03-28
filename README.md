@@ -2,8 +2,8 @@
 Metadata schemas to digitally represent coin cell batteries 
 
 ## Authors
-- Nukorn Plainpan (Empa, Switzerland)
-- Corsin Battaglia (Empa, Switzerland)
+- Nukorn Plainpan (Empa)
+- Corsin Battaglia (Empa)
 
 
 ## Goals
