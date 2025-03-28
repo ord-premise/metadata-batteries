@@ -2,8 +2,8 @@
 Metadata schemas to digitally represent coin cell batteries 
 
 ## Authors
- [Nukorn Plainpan](https://github.com/NukP)  
-Corsin Battaglia 
+- Nukorn Plainpan (Empa, Switzerland)
+- Corsin Battaglia (Empa, Switzerland)
 
 
 ## Goals
